@@ -42,7 +42,7 @@ ylabel(['Èíòåíñèâíîñòü, ýðã/ñì^2/ñ', char(197)])
 title('Ñïåêòðû çâ¸çä')
 grid on
 legend(starNames, 'location', 'northeast')
-text(lambdaStart + 5, maxS, 'Ïàñüêî Èãîðü, Á04-007')
+text(lambdaStart + 5, maxS, 'Пасько Игорь, Б04-007')
 hold off
 set(fg1, 'Visible', 'on')
 saveas(fg1, 'spectra', 'png')
