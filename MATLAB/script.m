@@ -37,15 +37,16 @@ for i = 1:1:star_count
     hold on
 end
 
-xlabel('Äëèíà âîëíû, íì')
-ylabel(['Èíòåíñèâíîñòü, ığã/ñì^2/ñ', char(197)])
-title('Ñïåêòğû çâ¸çä')
+xlabel('Ã„Ã«Ã¨Ã­Ã  Ã¢Ã®Ã«Ã­Ã», Ã­Ã¬')
+ylabel(['ÃˆÃ­Ã²Ã¥Ã­Ã±Ã¨Ã¢Ã­Ã®Ã±Ã²Ã¼, Ã½Ã°Ã£/Ã±Ã¬^2/Ã±', char(197)])
+title('Ã‘Ã¯Ã¥ÃªÃ²Ã°Ã» Ã§Ã¢Â¸Ã§Ã¤')
 grid on
 legend(starNames, 'location', 'northeast')
-text(lambdaStart + 5, maxS, 'Ïàñüêî Èãîğü, Á04-007')
+text(lambdaStart + 5, maxS, 'ÃÃ Ã±Ã¼ÃªÃ® ÃˆÃ£Ã®Ã°Ã¼, Ã04-007')
 hold off
 set(fg1, 'Visible', 'on')
 saveas(fg1, 'spectra', 'png')
 
 movaway = starNames(z > 0);
 speed = speed';
+
