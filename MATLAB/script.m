@@ -37,9 +37,9 @@ for i = 1:1:star_count
     hold on
 end
 
-xlabel('Äëèíà âîëíû, íì')
-ylabel(['Èíòåíñèâíîñòü, ýðã/ñì^2/ñ', char(197)])
-title('Ñïåêòðû çâ¸çä')
+xlabel('Длина волны, нм')
+ylabel(['Интенсивность, эрг/см^2/с', char(197)])
+title('Спектры звёзд')
 grid on
 legend(starNames, 'location', 'northeast')
 text(lambdaStart + 5, maxS, 'Пасько Игорь, Б04-007')
@@ -49,4 +49,3 @@ saveas(fg1, 'spectra', 'png')
 
 movaway = starNames(z > 0);
 speed = speed';
-
