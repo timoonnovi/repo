@@ -1,14 +1,21 @@
 import RPi.GPIO as GPIO
 import time
+import math
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.io import wavfile
 
 GPIO.setmode(GPIO.BCM)
 #GPIO.setup(channel, GPIO.OUT)
-chan_list = [21, 20, 16, 12, 7, 8, 25, 24]
+#chan_list = [21, 20, 16, 12, 7, 8, 25, 24]
+chan_list = [26, 19, 13, 6, 5, 11, 9, 10]
 #GPIO.setup(chan_list, GPIO.OUT)
 #GPIO.output(channel, state)
 #GPIO.cleanup()
 
 #time.sleep()
+
+#samplerate, data = wavfile.read('./output/audio.wav')
 
 def lightUp(ledNumber, period):
     GPIO.setup(ledNumber, GPIO.OUT)
@@ -66,8 +73,37 @@ def runningPattern(pattern, direction):
             pattern = pattern << 1
             pattern -= 256
             pattern += tmp
+            
+def repetitionsNumber(a, t=0):
+    for i in range(a):
+        for j in range(256):
+            lightNumber(j, t)
+        for j in range(256, -1, -1):
+            lightNumber(j, t)
+            
+def sinout(fr=0, hr=0):
+    a=[]
+    ti=[]
+    t_0=time.time()
+    for i in range(hr):
+        t=(time.time()-t_0)*(1/(fr*0.0001))
+        time.sleep(0.0001)
+        a.append(int((math.sin(t*3.1415)+1)*128))
+        ti.append(t)
+        
+#    plt.plot(ti, a)
+#    plt.show()
+    return a
+
+def sinCAP(a, b, fr):
+    c=sinout(a, b)
+    for i in range(b):
+        lightNumber(c[i], 1/(fr*a))
     
-a = int(input())
 b = int(input())
-lightNumber(a, b)
+a = float(input())
+fr = float(input())
+#lightNumber(b, a)
+#repetitionsNumber(b, a)
+sinCAP(a, b, fr)
 GPIO.cleanup()
