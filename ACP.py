@@ -141,6 +141,19 @@ while 1:
     print(a, " = ", round(a*3.3/255, 2), "V", sep = '')
     nox()
     Volt(a)
+
+while True:
+    print('qwerty')
+    for dv in range(256):
+        print(dv)
+        Volt(dv)
+        time.sleep(0.5)
+        if GPIO.input(4) == 1:
+            av = round(dv * 3.3 / 255, 2)
+            print("Digital value: ", dv, ", Analog value: ", av,  "V", sep = '')
+            nox()
+            break
+    nox()
     
 GPIO.cleanup()
                                                                                                                                             
