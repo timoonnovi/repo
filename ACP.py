@@ -112,13 +112,17 @@ def Volt(a):
         if str(xyu[i]) == str(1):
             GPIO.setup(chan_list[i], GPIO.OUT)
             GPIO.output(chan_list[i], 1)
+        else:
+            GPIO.setup(chan_list[i], GPIO.OUT)
+            GPIO.output(chan_list[i], 0)
     
 def VoltPodbor():
     GPIO.setup(4, GPIO.IN)
     c=GPIO.input(4)
     a = 0
     while a < 256:
-        Napr(a)
+        Volt(a)
+        time.sleep(0.001)
         c = GPIO.input(4)
         if c == 1:
             a += 1
@@ -131,29 +135,27 @@ def VoltPodbor():
 
 GPIO.setup(17, GPIO.OUT)
 GPIO.output(17, 1)
+GPIO.setup(4, GPIO.IN)
+
+#while 1:
+#    print("Enter value (-1 to exit) > ", end = '')
+#    a = int(input())
+#    if a == -1:
+#        nox()
+#        exit()
+#    print(a, " = ", round(a*3.3/255, 2), "V", sep = '')
+#    nox()
+#    Volt(a)
 
 while 1:
-    print("Enter value (-1 to exit) > ", end = '')
-    a = int(input())
-    if a == -1:
-        nox()
-        exit()
-    print(a, " = ", round(a*3.3/255, 2), "V", sep = '')
-    nox()
-    Volt(a)
+    dv = VoltPodbor()
+    av = round(dv * 3.3 / 255, 2)
+    print("Digital value: ", dv, ", Analog value: ", av,  "V", sep = '')
+    dv1 = VoltPodbor()
+    av1 = round(dv1 * 3.3 / 255, 2)
+    while av == av1:
+        dv1 = VoltPodbor()
+        av1 = round(dv1 * 3.3 / 255, 2)
 
-while True:
-    print('qwerty')
-    for dv in range(256):
-        print(dv)
-        Volt(dv)
-        time.sleep(0.5)
-        if GPIO.input(4) == 1:
-            av = round(dv * 3.3 / 255, 2)
-            print("Digital value: ", dv, ", Analog value: ", av,  "V", sep = '')
-            nox()
-            break
-    nox()
-    
 GPIO.cleanup()
-                                                                                                                                            
+
