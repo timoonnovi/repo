@@ -112,41 +112,63 @@ def Napr(a):
         if str(xyu[i])==str(1):
             GPIO.setup(chan_list[i], GPIO.OUT)
             GPIO.output(chan_list[i], 1)
-    
-def NaprPodbor():
-    GPIO.setup(4, GPIO.IN)
-    c=GPIO.input(4)
-    a=0
-    while a<256:
-        Napr(a)
-        c=GPIO.input(4)
-        if c==1:
-            a+=1
         else:
-            break
-    return a
+            GPIO.setup(chan_list[i], GPIO.OUT)
+            GPIO.output(chan_list[i], 0)
+def NaprPodbor():
+    
+    GPIO.setup(17, GPIO.OUT)
+    GPIO.output(17, 1)
+    
+    l=0
+    r=256
     nox()
+    while r-l>1:
+        m=(l+r)//2
+        nox()
+        GPIO.output(17, 1)
+        Napr(m)
+        GPIO.setup(4, GPIO.IN)
+        c=GPIO.input(4)
+        time.sleep(0.01)
+        if c>0:
+            l=m
+            nox()
+        else:
+            r=m
+            nox()
+        #print(l, r)
+    nox()
+    
+    return (l+r)//2
+    
+    
+
 #lightNumber(b, a)
 #repetitionsNumber(b, a)
 
-GPIO.setup(17, GPIO.OUT)
-GPIO.output(17, 1)
+#GPIO.setup(17, GPIO.OUT)
+#GPIO.output(17, 1)
 
-while 1:
-    GPIO.setup(17, GPIO.OUT)
-    GPIO.output(17, 1)
-    print("Enter value (-1 to exit) > ")
-    a=int(input())
-    print(a, " = ", round(a*3.3/255, 2), "V")
-    nox()
-    Napr(a)
-    
 #while 1:
-#    a=NaprPodbor()
-#    print("Digital value: ", a,", Analog value: ",round(a*3.3/256, 2)," V")
-#    b=NaprPodbor()
-#    while a==b:
-#        b=NaprPodbor()
+#    GPIO.setup(17, GPIO.OUT)
+#    GPIO.output(17, 1)
+#    print("Enter value (-1 to exit) > ")
+#    a=int(input())
+#    print(a, " = ", round(a*3.3/255, 2), "V")
+#    nox()
+#    Napr(a)
+    
+while 1:
+    
+    a=NaprPodbor()
+    c=round(a*3.3/256, 1)
+    print("Digital value: ", a,", Analog value: ",round(a*3.3/256, 2)," V")
+    b=NaprPodbor()
+    d=round(b*3.3/256, 1)
+    while c==d:
+        b=NaprPodbor()
+        d=round(b*3.3/256, 1)
 GPIO.cleanup()
 
 
